@@ -1,0 +1,27 @@
+angular.module('app')
+  .factory('AuthGuard', ['$rootScope', '$location', 'authService', function($rootScope, $location, AuthService) {
+    return {
+      canActivate: function() {
+        if (AuthService.isAuthenticated()) {
+          return true;
+        } else {
+          $location.path('/login').search({ returnUrl: $location.path() });
+          return false;
+        }
+      }
+    };
+  }])
+  .factory('RoleGuard', ['$rootScope', '$location', 'authService', function($rootScope, $location, AuthService) {
+    return {
+      canActivate: function(route) {
+        var expectedRole = route.data.expectedRole;
+        var userRole = AuthService.getUserRole();
+        if (AuthService.isAuthenticated() && userRole === expectedRole) {
+          return true;
+        } else {
+          $location.path('/unauthorized');
+          return false;
+        }
+      }
+    };
+  }]);

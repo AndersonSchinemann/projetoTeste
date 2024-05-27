@@ -1,0 +1,34 @@
+var app = angular.module('myLogin', ['ng']);
+
+app.controller('LoginController', function($scope, $http, $window) {
+    $scope.login = {};
+
+    $scope.acessoLogin = function() {
+        $http.post('/authenticate', $scope.login)
+            .then(function(response) {
+			    if (response.status == 200) {			      
+			       
+			       // Verifique se o token e o username foram recebidos
+			        if ($scope.login) {
+			            alert('Usuario Liberado.');
+			            // Armazene o token no localStorage
+			            //localStorage.setItem('authToken', token);
+			
+			            // Redirecione para a página protegida
+			            $window.location.href = '/dashboard';
+			        } else {
+			            // Tratar erro na resposta da autenticação
+			            alert('Erro na autenticação: dados incompletos.');
+			            console.error('Erro: dados incompletos na resposta da autenticação.');
+			        }
+			    } else {
+			        // Tratar erro de autenticação ou outros erros
+			        alert('Erro no login: ' + response.status);
+			        console.error('Erro no login:', response.status);
+			    }
+            })
+            .catch(function(error) {
+               alert('Erro ao processar a solicitação: ' + error.statusText + ' Status '+ error.status);
+            });
+    };
+});

@@ -1,0 +1,41 @@
+angular.module('app.auth', []).factory('authService', ['$http', '$location', function($http, $location) {
+  
+  var authTokenKey = 'authToken';
+  var userRoleKey = 'userRole';
+
+  return {
+    login: function(credentials) {
+      return $http.post('/authenticate', credentials).then(function(response) {
+        localStorage.setItem(authTokenKey, response.data.token);
+        var payload = JSON.parse(atob(response.data.token.split('.')[1]));
+        alert("payload",response.data);
+        localStorage.setItem(userRoleKey, payload.scope);
+        return response.data;
+      });
+    },
+
+    logout: function() {
+      localStorage.removeItem(authTokenKey);
+      localStorage.removeItem(userRoleKey);
+      $location.path('/login');
+    },
+
+    getToken: function() {
+      return localStorage.getItem(authTokenKey);
+    },
+
+    getUserRole: function() {
+      return localStorage.getItem(userRoleKey);
+    },
+
+    isAuthenticated: function() {
+      return !!this.getToken();
+    },
+
+    hasRole: function(role) {
+      return this.getUserRole() === role;
+    }
+  };
+}]);
+
+

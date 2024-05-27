@@ -1,0 +1,9 @@
+var app = angular.module('app', []);
+
+app.controller('LoginController',function( $scope, $http, authService) {
+    $scope.login = {};
+
+    $scope.acessoLogin = function() {
+        alert("login");
+    };
+});

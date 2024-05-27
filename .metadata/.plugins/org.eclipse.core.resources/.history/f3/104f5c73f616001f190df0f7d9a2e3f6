@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath />
+    </parent>
+    <groupId>com.evision</groupId>
+    <artifactId>Evision</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Evision</name>
+    <description>Evision project for Spring Boot</description>
+    <properties>
+        <maven.compiler.target>19</maven.compiler.target>
+        <maven.compiler.source>19</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- Dependências para o módulo 1 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <scope>${useraccess.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <scope>${module1.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <scope>${module1.scope}</scope>
+        </dependency>
+        <!-- Outras dependências para o módulo 1 -->
+
+        <!-- Dependências para o módulo 2 -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.1</version>
+            <scope>${module2.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <scope>${module2.scope}</scope>
+        </dependency>
+        <!-- Outras dependências para o módulo 2 -->
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>module1</id>
+            <properties>
+                <module1.scope>compile</module1.scope>
+                <!-- Adicione outras propriedades específicas do módulo 1 aqui -->
+            </properties>
+        </profile>
+        <profile>
+            <id>module2</id>
+            <properties>
+                <module2.scope>compile</module2.scope>
+                <!-- Adicione outras propriedades específicas do módulo 2 aqui -->
+            </properties>
+        </profile>
+    </profiles>
+
+    <!-- Restante do arquivo pom.xml -->
+
+</project>

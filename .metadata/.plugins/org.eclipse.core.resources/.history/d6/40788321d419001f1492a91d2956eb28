@@ -1,0 +1,66 @@
+<!-- Adicione Bootstrap CSS e AngularJS -->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+
+<!-- Adicione ng-bootstrap CSS e JavaScript -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/3.0.6/ui-bootstrap-tpls.min.js"></script>-->
+
+<style>
+	/* Adicione um estilo personalizado para ajustar a largura dos inputs */
+	.custom-width-input {
+		width: 50%;
+		/* Largura desejada */
+		/* Para centralizar horizontalmente */
+	}
+</style>
+<!-- Seus scripts Angular -->
+<!--<script src="js/angular.min.js"></script>-->
+<script src="/access/js/controllers/controllerCad.js"></script>
+<title>Cadastro</title>
+
+<div class="container text-left" ng-app="CadastroApp" ng-controller="UsuarioController">
+	<h2>Cadastro de Usuário</h2>
+
+	<form name="formulario" ng-app>
+		<div class="form-group text-left">
+			<label for="nome">Nome:</label>
+			<input type="text" class="form-control custom-width-input" id="nome" ng-model="usuario.nome" name="nome"
+				required>
+			<span ng-class="{'text-danger': formulario.nome.$error.required}"
+				ng-show="formulario.nome.$error.required">Nome é obrigatório</span>
+		</div>
+
+		<div class="form-group text-left">
+			<label for="email">Email:</label>
+			<input type="email" class="form-control custom-width-input" id="email" ng-model="usuario.email" name="email"
+				required>
+			<span ng-class="{'text-danger': formulario.email.$error.required}"
+				ng-show="formulario.email.$error.required">Email é obrigatório</span>
+			<span ng-class="{'text-danger': formulario.email.$error.email}"
+				ng-show="formulario.email.$error.email">E-mail inválido</span>
+		</div>
+
+		<div class="form-group text-left">
+			<label for="senha">Senha:</label>
+			<input type="password" class="form-control custom-width-input" id="senha" ng-model="usuario.senha"
+				name="senha" required>
+			<span ng-class="{'text-danger': formulario.senha.$error.required}"
+				ng-show="formulario.senha.$error.required">Senha é obrigatória</span>
+		</div>
+
+		<div class="form-group text-left">
+			<label for="perfil">Perfil de Acesso:</label>
+			<select class="form-control custom-width-input" id="perfil" ng-model="usuario.perfil" name="perfil"
+				required>
+				<option value="admin">Admin</option>
+				<option value="usuario">Usuário</option>
+			</select>
+			<span ng-class="{'text-danger': formulario.perfil.$error.required}"
+				ng-show="formulario.perfil.$error.required">Perfil é obrigatório</span>
+		</div>
+
+		<button type="button" class="btn btn-primary" ng-click="cadastrarUsuario()"
+			ng-disabled="formulario.$invalid || formulario.$pristine">Cadastrar</button>
+	</form>
+</div>

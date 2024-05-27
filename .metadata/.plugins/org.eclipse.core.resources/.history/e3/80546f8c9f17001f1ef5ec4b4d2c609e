@@ -1,0 +1,213 @@
+/* Basic styles */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	background-color: #609e89; 
+}
+.my-logo-custom {
+  background-color: rgb(0, 0, 0);
+  height: 40%; /* Altere para a altura desejada */
+  width: 100%; /* Altere para a largura desejada */
+}
+.my-custom-margin {
+  margin-top: 20%; /* Defina o tamanho da margem superior desejado */
+}
+.my-custom-margin-img {
+  margin-top: 10%; /* Defina o tamanho da margem superior desejado */
+}
+.custom-img-size {
+      width: 150px; /* Defina a largura desejada */
+      height: auto; /* Ajusta a altura automaticamente para manter a proporção */
+    }
+.image-container {
+	text-align: center;
+}
+.logo-image-container {
+	text-align: left;
+}
+@media (min-width: 992px) {
+	.margin-top-desktop {
+		margin-top: 100px; /* Ajuste o valor conforme necessário */
+	}
+}
+/* Estilo personalizado para ajustar a largura dos inputs */
+.custom-width-input {
+	width: 60%;
+}
+.box-effect {
+      border: 2px solid #ffffff; /* Adiciona uma borda cinza */
+      border-radius: 10px; /* Bordas arredondadas */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra para efeito de elevação */
+      padding: 20px; /* Espaçamento interno */
+      background-color: #75a897; /* Fundo branco */
+    }
+.footer {
+      background-color: #286955; /* Cor de fundo do rodapé */
+      height: 40%; /* Altere para a altura desejada */
+  	  width: 100%;
+      text-align: center; /* Centraliza o conteúdo */
+    }
+    .footer img {
+      width: 50px; /* Largura da imagem do logo no rodapé */
+      height: auto; /* Mantém a proporção da imagem */
+    }
+
+.topbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: #cff7cc;
+	color: #171414;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	padding: 20px;
+	margin-left: 20%;
+	/* Ajuste o valor de acordo com a largura do seu sidebar */
+	border-bottom: 1px solid #ccc;
+	/* Adiciona uma linha na parte inferior */
+}
+
+.content {
+	background-color: #cff7cc;
+	overflow-y: auto;
+	color: #171414;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	padding: 20%;
+	margin-left: 20%;
+	/* Ajuste o valor de acordo com a largura do seu sidebar */
+	border-bottom: 1px solid #ccc;
+	/* Adiciona uma linha na parte inferior */
+}
+
+.topbar12,
+.notifications {
+	border-radius: 10%;
+	width: 30px;
+	height: 30px;
+	background-color: #b7f4b3;
+	position: relative;
+	align-items: center;
+	padding: 10px;
+}
+
+.topbar12,
+.user {
+	border-radius: 13%;
+	width: 30px;
+	height: 30px;
+	background-color: #f9ccfe;
+	position: relative;
+	align-items: center;
+	padding: 10px;
+}
+
+.notifications,
+.user {
+	margin-right: 20px;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+
+.notification-icon,
+.user-avatar {
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	margin-right: 10px;
+
+}
+
+.notification-dropdown,
+.user-dropdown {
+	background-color: #f4f4f4;
+	display: block;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	background-color: #f4f4f4;
+	min-width: 120px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 10%;
+	z-index: 1;
+}
+
+.notification-dropdown p,
+.user-dropdown p {
+	padding: 10px;
+	margin: 0;
+	cursor: pointer;
+}
+
+.topbar13 {
+	display: inline-block;
+	width: 40px;
+	/* Defina o tamanho do quadrado */
+	height: 40px;
+	/* Defina o tamanho do quadrado */
+	border: 2px solid #333;
+	/* Cor e largura da borda */
+	border-radius: 5px;
+	/* Borda arredondada */
+	overflow: hidden;
+	/* Garante que os ícones não ultrapassem os limites do quadrado */
+	margin-right: 10px;
+	/* Espaçamento entre os ícones */
+}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.position-center {
+	position: relative;
+}
+
+.position-center i {
+	position: absolute;
+	top: 70%;
+	left: 70%;
+	transform: translate(-70%, -70%);
+}
+
+.notification-badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+}
+
+.sidebar {
+	border-radius: 3%;
+	background-color: #0047;
+	width: 20%;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	position: fixed;
+	overflow-y: auto;
+}
+
+.menu {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.nav-link {
+	padding: 10px;
+	cursor: pointer;
+	border-bottom: 1px solid #ccc;
+}
+
+.other-info {
+	padding: 10px;
+}
+
+
+

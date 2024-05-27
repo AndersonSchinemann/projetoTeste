@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="controllerDash">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="/access/css/styleDash.css">
+	<script src="/access/js/angular.min.js"></script>
+	<script src="/access/js/controllers/controllerDash.js"></script>
+	<script src="/access/js/controllers/controllerFiltro.js"></script>
+</head>
+
+
+
+<body ng-controller="DashboardController">
+
+	<div class="topbar">
+
+		<div class="notifications" ng-mouseenter="showNotifications = true" ng-mouseleave="showNotifications = false">
+
+			<span class="notification-icon flex-center">
+				<i class="far fa-envelope fa-2x"></i>
+				<span class="badge rounded-pill badge-secondary notification-badge">{{notificationCount}}</span>
+			</span>
+			<div class="notification-dropdown" ng-show="showNotifications">
+				<!-- Dropdown content for notifications -->
+				<p>Notification 1</p>
+				<p>Notification 2</p>
+				<p>Notification 3</p>
+			</div>
+		</div>
+		<div class="notifications" ng-mouseenter="showUserMenu = true" ng-mouseleave="showUserMenu = false">
+
+			<img src="/access/img/user.png" alt="User" class="user-avatar">
+
+			<div class="user-dropdown" ng-show="showUserMenu">
+				<!-- Dropdown content for user menu -->
+				<p ng-click="changePage()">Perfil</p>
+				<p ng-click="listagem()">Configuração</p>
+				<p ng-click="logout()">Logout</p>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="sidebar">
+		<ul class="menu">
+			<li class="nav-link">Dashboard</li>
+			<li class="nav-link">Reports</li>
+			<li class="nav-link">Analytics</li>
+		</ul>
+		<div class="other-info">
+			<!-- Additional information -->
+			<p>Other Information</p>
+		</div>
+	</div>
+	<div class="content">
+		<p>Profile</p>
+		<div ng-bind="currentPage">{</div>
+		<div>{{currentPage}}</div>
+		<div>{{texto}}</div>
+	</div>
+
+	<!-- Main content goes here -->
+
+	<!--<script src="/access/js/angular.min.js"></script>
+	<script src="/access/js/controllers/controllerLogin.js"></script>-->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<!-- Finalmente, carregue Angular UI Bootstrap -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap-tpls.min.js"></script>
+</body>
+
+</html>

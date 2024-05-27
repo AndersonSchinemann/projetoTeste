@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 3 elements from project &apos;Evision&apos;&#x0D;&#x0A;- Original project: &apos;Evision&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     com.evision.service.AuthService.java&#x0D;&#x0A;     com.evision.service.AuthService&#x0D;&#x0A;     com.evision.service.Credentials.java" description="Delete elements" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.evision.service{AuthService.java" element2="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.evision.service{Credentials.java" elements="2" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1705614900883" subPackages="false" version="1.0"/>
+</session>

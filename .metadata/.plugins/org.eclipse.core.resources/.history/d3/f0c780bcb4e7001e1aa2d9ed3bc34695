@@ -1,0 +1,141 @@
+package com.evision.config;
+
+
+
+
+import java.util.Arrays;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+
+
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfiguration{
+	
+	
+	
+
+   private UserDetailsService userDetailsService;
+	
+	@Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable()) // Avalie se é realmente necessário desabilitar o CSRF
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/", "/src/**", "/static/**", "/css/**", "/views/**", "/js/**", "/js/controllerLogin.js", "/cadastro", "/login/api/**").permitAll()
+                .requestMatchers("/api/usuarios/cad").permitAll()
+                .requestMatchers("/login/api/login").permitAll()
+                .requestMatchers("/cadastro").permitAll()
+                //.requestMatchers("/listagem").hasAuthority("ADMIN")
+                .requestMatchers("/listagem").hasAuthority("ADMIN")
+                //.requestMatchers("/listagem").hasAuthority("admin") // Corrija a autoridade, se necessário
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/")
+                //.loginProcessingUrl("/listagem")
+                //.defaultSuccessUrl("/listagem", true)
+                //.successForwardUrl("/listagem")
+                .failureUrl("/cadastro")
+            )
+            .logout(logout -> logout
+                .logoutSuccessUrl("/logout")
+                .deleteCookies("JSESSIONID")
+            )
+            .exceptionHandling(exception -> exception
+                .accessDeniedPage("/negado")
+            );
+        return http.build();
+    }
+	
+	
+//
+//	 public void addViewControllers(ViewControllerRegistry registry) {
+//	        registry.addViewController("/{path:^(?!static|api).*$}/**").setViewName("forward:/");
+//	 }
+//	@Bean
+//    UserDetailsService userDetailsService() {
+//        return new InMemoryUserDetailsManager(
+//            Arrays.asList(
+//                User.withUsername("user").password(passwordEncoder().encode("password")).roles("USER").build(),
+//                User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("USER", "ADMIN").build()
+//            )
+//        );
+//    }
+
+//	@Bean
+//	CorsConfigurationSource corsConfigurationSource() {
+//	   
+//		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+//		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//	    source.registerCorsConfiguration("/**", configuration);
+//		
+////		CorsConfiguration configuration = new CorsConfiguration();
+////
+////	    // Permita requisições do seu frontend AngularJS
+////	    configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+////
+////	    // Permita métodos HTTP específicos
+////	    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+////
+////	    // Permita cabeçalhos específicos
+////	    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+////
+////	    // Permita que o cliente acesse as credenciais (cookies)
+////	    configuration.setAllowCredentials(true);
+////
+////	    // Permita redirecionamentos para qualquer URL
+////	    configuration.setAllowCredentials(true);
+////	    configuration.setMaxAge((long) 3600);
+////
+////	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+////	    source.registerCorsConfiguration("/**", configuration); // Aplica a configuração a todas as URLs
+//
+//	    return source;
+//	}
+
+	
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+//    @Bean
+//    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//	    return  authenticationConfiguration.getAuthenticationManager();
+//	}
+//	
+//    
+    @Bean
+     PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+//    
+//	 @Bean
+//	 LogoutFilter logoutFilter() {
+//	     LogoutFilter logoutFilter = new LogoutFilter(
+//	         "/logout",
+//	         new SecurityContextLogoutHandler());
+//	     logoutFilter.setFilterProcessesUrl("/logout");
+//	     return logoutFilter;
+//	 }
+
+}

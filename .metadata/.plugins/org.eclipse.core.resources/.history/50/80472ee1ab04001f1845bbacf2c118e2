@@ -1,0 +1,66 @@
+package com.evision.controller;
+
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.evision.model.Usuario;
+import com.evision.service.AuthenticationService;
+
+
+
+
+//Controller privado responsavel pela autenticação do usuario
+@RestController
+//@RequestMapping("/auth")
+public class LoginController {
+	
+
+	 @Autowired
+	 private AuthenticationService authenticationService;
+
+	 public LoginController() {
+	 }
+	 
+	// private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	 @PostMapping("/process")
+	 public ResponseEntity<?> authenticate(@RequestParam("username") String username, @RequestParam("password") String password) {
+		    Map<String, Object> responseMap = new HashMap<>();
+		    String token = "1";authenticationService.authenticate(authentication);
+		    if (token != "1") {
+		        responseMap.put("token", token);
+		        // Add other authentication details to the map as needed (e.g., username, roles)
+		        //responseMap.put("username", authentication.getName()); // Assuming a getUsername() method
+		        return ResponseEntity.ok().body(responseMap);
+		    } else {
+		        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		    }
+		}
+
+
+	 
+	 
+	 //@PostMapping("/process")
+	 public String authenticacao(Authentication authentication) {
+	     System.out.print("usernameLoginControll --------process---------");
+	     // Crie um objeto Authentication com username e password
+	     //Authentication authentication = new Authentication(username, password);
+	    // return authenticationService.authenticate(authentication);
+	     System.out.println("Cadastro");
+	     return null;
+	 }
+//	
+
+}

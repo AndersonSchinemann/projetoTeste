@@ -1,0 +1,45 @@
+var app = angular.module('myLogin', []);
+
+
+app.controller('LoginController', function($scope, $http, $window) {
+    $scope.login = {};
+
+    $scope.acessoLogin = function() {
+        $http.post('/login/api/login', $scope.login,{
+			transformResponse: [function (data) {
+            // Retorna a resposta como texto
+                    alert(data);
+		            return data;
+		        }]
+		    })
+            .then(function(response) {
+                if (response.status === 200) {  // Redirecionamento
+                    alert('Usuario valido');
+                     //alert(response.status);
+                    // Recupera a URL de redirecionamento da resposta
+                    //var redirectUrl = response.headers('Location');
+                    // Imprime a URL de redirecionamento na console
+                    $window.location.href = '/listagem'
+                    //console.log(redirectUrl);
+                   
+                   // $location.path(redirectUrl);
+                } else {
+                    // Tratar erro de autenticação ou outros erros
+                    alert(response.status);
+                    console.error('Erro no login:', response.status);
+                }
+            })
+            .catch(function(error) {
+				if (error.status === 302) {
+                // Redirecionar para a nova rota
+                	alert('erro 302');
+                	alert(error.status);
+                	$window.location.href = error.headers('Location');
+            	}else{
+					alert('usuario invalido ou senha incorreta');
+                	//alert(error);
+				}		
+				
+            });
+    };
+});

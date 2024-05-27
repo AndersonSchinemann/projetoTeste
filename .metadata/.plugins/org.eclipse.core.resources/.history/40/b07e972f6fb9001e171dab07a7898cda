@@ -1,0 +1,81 @@
+package com.evision.config;
+
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig {
+	
+	@Autowired
+	private AuthenticationConfiguration authenticationConfiguration;
+	
+    @Bean
+    SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    		http.authorizeHttpRequests((authz) -> authz
+    			 .requestMatchers("/", "/src/**", "/static/**", "/css/**", "/views/**", "/js/**").permitAll()
+    			 .requestMatchers("/js/controllerLogin.js").permitAll()
+    			 .requestMatchers("/cadastro").permitAll()
+    			 .requestMatchers("/login/api/login").permitAll()
+    			 .requestMatchers("/listagem").authenticated()
+    			 //.requestMatchers("/listagem").hasAuthority(ADMIN)
+    	         .anyRequest().authenticated()
+    	   ).formLogin( (form) -> form
+    	         .loginPage("/")
+    	         .loginProcessingUrl("/login")
+    	         .defaultSuccessUrl("/listagem",true)
+    	         .failureUrl("/")
+    	    ).logout( (logout) -> logout
+    	         .logoutSuccessUrl("/logout")
+    	         .deleteCookies("JSESSIONID")
+    	    ).exceptionHandling( (ex) -> ex
+    	         .accessDeniedPage("/negado")
+    	    );
+    		return http.build();
+   }
+	
+//    @Bean
+//   CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080")); // Substitua pelo seu frontend URL
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//
+//        return source;
+//    }
+    @Bean
+    AuthenticationManager authenticationManager() throws Exception {
+         return authenticationConfiguration.getAuthenticationManager();
+     }
+	
+//    
+    @Bean
+     PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+//    
+//	 @Bean
+//	 LogoutFilter logoutFilter() {
+//	     LogoutFilter logoutFilter = new LogoutFilter(
+//	         "/logout",
+//	         new SecurityContextLogoutHandler());
+//	     logoutFilter.setFilterProcessesUrl("/logout");
+//	     return logoutFilter;
+//	 }
+
+}

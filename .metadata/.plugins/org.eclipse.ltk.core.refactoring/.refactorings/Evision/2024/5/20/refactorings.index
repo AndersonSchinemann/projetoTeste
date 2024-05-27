@@ -1,0 +1,75 @@
+1715625621450	Delete element
+1715625645269	Delete element
+1715691718512	Delete element
+1715869675897	Delete elements
+1715869697416	Move compilation unit
+1715869704889	Move compilation unit
+1715869754126	Rename package 'com.evision.component.erp'
+1715869875603	Move compilation unit
+1715869884243	Move compilation unit
+1715869960043	Rename package 'com.evision.component.crm'
+1715869967193	Delete element
+1715870247542	Rename package 'com.evision.component'
+1715870318208	Rename package 'com.evision.model'
+1715870343509	Rename package 'com.evision.erp.component'
+1715870366107	Rename package 'com.evision.erp.model'
+1715870446296	Delete element
+1715870486469	Delete element
+1715870494239	Delete element
+1715870501598	Delete element
+1715870614166	Delete element
+1715870665061	Delete element
+1715874745247	Delete element
+1715874813889	Rename package 'com.evision.component'
+1715874826478	Rename package 'com.evision.config'
+1715874839936	Rename package 'com.evision.controller'
+1715874847312	Rename package 'com.evision.model'
+1715874855532	Rename package 'com.evision.repository'
+1715874862285	Rename package 'com.evision.security'
+1715874869824	Rename package 'com.evision.service'
+1715874876244	Rename package 'com.evision.teste'
+1715875020119	Copy compilation unit
+1715875109027	Delete element
+1715875113868	Delete element
+1715875118577	Delete element
+1715875148171	Delete element
+1715875165982	Delete element
+1715875764915	Rename package 'com.evision.component.erp'
+1715875781486	Rename package 'com.evision.config.erp'
+1715875798309	Rename package 'com.evision.controller.erp'
+1715875812280	Rename package 'com.evision.model.erp'
+1715875824453	Rename package 'com.evision.repository.erp'
+1715875835764	Rename package 'com.evision.security.erp'
+1715875848104	Rename package 'com.evision.service.erp'
+1715875857946	Rename package 'com.evision.teste.erp'
+1715876682342	Rename package 'com.evision.erp.component'
+1715876690506	Rename package 'com.evision.erp.config'
+1715876697692	Rename package 'com.evision.erp.controller'
+1715876708383	Rename package 'com.evision.erp.model'
+1715876718248	Rename package 'com.evision.erp.security'
+1715876726912	Rename package 'com.evision.erp.repository'
+1715876733768	Rename package 'com.evision.erp.service'
+1715876738844	Rename package 'com.evision.erp.teste'
+1715877539527	Delete element
+1715877862730	Rename package 'com.evision.erp'
+1715878032266	Rename package 'com.evision.UserAccessLayer'
+1715878041054	Rename package 'com.evision.component'
+1715878048328	Rename package 'com.evision.config'
+1715878055371	Rename package 'com.evision.controller'
+1715878062058	Rename package 'com.evision.model'
+1715878068444	Rename package 'com.evision.repository'
+1715878075246	Rename package 'com.evision.security'
+1715878081416	Rename package 'com.evision.service'
+1715878089549	Rename package 'com.evision.teste'
+1715966244582	Rename package 'com.evision.CRM'
+1715966594797	Rename package 'com.evision.crm.suporteCliente'
+1715966696578	Rename resource 'descricao'
+1715967006898	Move 'css' to 'useraccess'
+1715967009255	Move 'img' to 'useraccess'
+1715967011612	Move 'js' to 'useraccess'
+1715967013739	Move 'templates' to 'useraccess'
+1715967015942	Move 'teste' to 'useraccess'
+1715969432445	Delete element
+1715970273015	Delete element
+1715971759763	Delete element
+1716046158682	Delete element

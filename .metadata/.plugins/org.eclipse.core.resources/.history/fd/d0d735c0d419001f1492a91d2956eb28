@@ -1,0 +1,44 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private authTokenKey = 'authToken';
+  private userRoleKey = 'userRole';
+
+  constructor(private http: HttpClient, private router: Router) { }
+
+  login(credentials: any) {
+    return this.http.post('/authenticate', credentials).toPromise().then((response: any) => {
+      localStorage.setItem(this.authTokenKey, response.token);
+      const payload = JSON.parse(atob(response.token.split('.')[1]));
+      localStorage.setItem(this.userRoleKey, payload.scope);
+      return response;
+    });
+  }
+
+  logout() {
+    localStorage.removeItem(this.authTokenKey);
+    localStorage.removeItem(this.userRoleKey);
+    this.router.navigate(['/login']);
+  }
+
+  getToken() {
+    return localStorage.getItem(this.authTokenKey);
+  }
+
+  getUserRole() {
+    return localStorage.getItem(this.userRoleKey);
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();
+  }
+
+  hasRole(role: string): boolean {
+    return this.getUserRole() === role;
+  }
+}

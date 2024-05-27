@@ -1,0 +1,168 @@
+package com.evision.controller;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.poi.ss.formula.functions.T;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.evision.model.Usuario;
+import com.evision.service.UsuarioService;
+
+
+
+
+//@EnableAspectJAutoProxy(proxyTargetClass = false)
+//@CrossOrigin(origins = "http://localhost:8080/")
+@RestController
+@RequestMapping("/login/api")
+public class LoginController {
+	
+	 ///private final AuthService authService;
+	 //@Autowired
+	 protected Usuario usuario;
+	 @Autowired
+	 private UsuarioService usuarioService;
+	 @Autowired
+	 protected AuthenticationManager authenticationManager;
+
+	// @Autowired
+	 protected Authentication authentication;
+	 
+	 
+	 public LoginController( UsuarioService usuarioService) {
+	    // this.authService = authService;
+	     this.usuarioService = usuarioService;  
+	 }
+	 //@Async
+	 @PostMapping("/login")
+	 public ResponseEntity<UserDetails> login(@RequestBody Map<String, Object> loginData,@CurrentSecurityContext SecurityContext context) throws IOException {
+	        
+		    String username = (String) loginData.get("email");
+	        String password = (String) loginData.get("senha");
+	        
+	       // usuario = usuarioService.findByUserEmail(username);
+	        //usuario = (Usuario) usuarioService.loadUserByUsername(username);
+	        //Map<String, Object> response = new HashMap<>();
+	        //response.put("status", HttpStatus.OK.value());
+	        // UserDetails userDetails = usuarioService.findByUserEmail(username);
+	       UserDetails usuario = usuarioService.loadUserByUsername(username);
+	       
+	       context = SecurityContextHolder.getContext();
+	      // System.out.print("usuario = Valido fase de autenticação-----------------."+"\n");
+	        if(usuario != null) {
+	        	try {
+	        		//AuthenticationManager authenticationManager = authenticationManagerBuilder.getObject();
+	        		Authentication authentication = new UsernamePasswordAuthenticationToken(
+	        				usuario,
+	        				usuario.getUsername(),
+	        				usuario.getAuthorities()
+	                        );
+	        		//authentication = usuario.getAuthentication();
+	        		//String name = authentication.getName();
+	        		//usuario = (UserDetails) usuarioService.loadUserByUsername(name);
+	        		SecurityContextHolder.getContext().setAuthentication(authentication);
+	        		//SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+	        		//userDetails = (UserDetails) authentication.getPrincipal();
+	        		//context = 
+	        		
+	      	        if (authentication.isAuthenticated()) {
+	      	        	//userDetails = (UserDetails) authentication.getPrincipal();
+	      	        	//String username_ = usuario.getUsername();
+	      	        	//System.out.print("Username_1fase Autenticado -----------------."+ usuario.getUsername() + "\n");
+	      	        	
+	      	        	System.out.print("usuario = Nome -----------------."+ authentication.getName()+ "\n");
+	      	        	System.out.print("Context -----------------."+ context + "\n");
+	      	        	//System.out.print("usuario = Autoridade -----------------."+ usuario.getAuthorities()+ "\n");
+		        		System.out.print("authenticationToken ----------------->>"+ authentication.isAuthenticated()+"\n");
+			            System.out.print("authenticationPrincipal ----------------->>"+ authentication.getPrincipal()+"\n");
+			            System.out.print("authenticationToken ----------------->>"+ authentication+"\n");
+			            System.out.print("authenticationClass ----------------->>"+ authentication.getClass()+"\n");
+			            System.out.print("Token principal -----------------."+ ((UsernamePasswordAuthenticationToken) authentication).getCredentials().toString()+ "\n");
+			            System.out.print("context.getAuthentication() -----------------."+ context.getAuthentication()+ "\n");
+			            String token =((UsernamePasswordAuthenticationToken) authentication).getCredentials().toString();
+			            //return exibirListagem();
+			            //return ResponseEntity.ok().build();
+			            return ResponseEntity.ok()
+			                    .header("Authorization", "Bearer " + token)
+			                    .body(usuario);
+			            
+	      	        } else {
+	      	            // Usuário não autenticado, realize o login
+	      	            // ...
+	      	        	//userDetails = (UserDetails) authentication.getPrincipal();
+	      	        
+	      	        	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	      	        }
+	        		//usuario.setAccountNonLocked(true);
+	        		//usuarioService.save(usuario);
+	        		//System.out.print("usuario = Valido -----------------."+ userDetails.getUsername() + "\n");
+		           // UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getPassword());
+	        		 // Implemente este método
+	        		
+//	        		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+//	        		authentication = authenticationManager.authenticate(authenticationToken);
+//	                SecurityContextHolder.getContext().setAuthentication(authentication);
+	                
+	
+					
+		        } catch (AuthenticationException e) {
+		            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		        }
+	        	
+	        }
+			return null;
+	        
+	 }
+//	
+//	
+//	 @PostMapping("/login")
+//	 public ResponseEntity<T> valida(){
+//		 // login(loginData, context);
+//		 System.out.print("--------Novo login-----------------.");
+//		 return ResponseEntity.status(HttpStatus.OK)
+//                 .header("Location", "/cadastro")
+//                 .build();
+//   
+//	 }
+	
+	
+	
+    @GetMapping("/isAuthenticated")
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null && authentication.isAuthenticated()
+                && !(authentication instanceof AnonymousAuthenticationToken);
+    }
+    
+  
+    
+
+}

@@ -1,0 +1,79 @@
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+public class WebSecurityConfig {
+
+    @Value("${jwt.public.key}")
+    private RSAPublicKey key;
+    @Value("${jwt.private.key}")
+    private RSAPrivateKey priv;
+
+    @Bean
+    @Order(1)
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf(CsrfConfigurer::disable)
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/access/css/**", "/access/app/**", "/access/img/**").permitAll()
+                .requestMatchers("/authenticate").permitAll()
+                .requestMatchers("/api/usuarios/**").permitAll()
+                .requestMatchers("/cadastro").permitAll()
+                .requestMatchers("/access/templates/**").hasRole("admin")
+                .requestMatchers("/access/templates/listagem").hasRole("usuario")
+                .requestMatchers("/processData").hasRole("admin")
+                .requestMatchers("/process").hasRole("admin")
+                .requestMatchers("/access/js/controllerLogin.js").hasRole("admin")
+                .requestMatchers("/access/css/style.css").hasRole("admin")
+                .anyRequest().authenticated())
+            .formLogin(form -> form
+                .loginPage("/login")
+                .permitAll())
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder()).jwtAuthenticationConverter(jwtAuthenticationConverter())));
+        return http.build();
+    }
+
+    @Bean
+    JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withPublicKey(this.key).build();
+    }
+
+    @Bean
+    JwtEncoder jwtEncoder() {
+        JWK jwk = new RSAKey.Builder(this.key).privateKey(this.priv).build();
+        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+        return new NimbusJwtEncoder(jwks);
+    }
+
+    @Bean
+    JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+
+        JwtAuthenticationConverter authenticationConverter = new JwtAuthenticationConverter();
+        authenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return authenticationConverter;
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+        configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder,
+                                                UserDetailsServiceImpl userDetailsService) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(userDetailsService)
+                                    .passwordEncoder(passwordEncoder);
+        return authenticationManagerBuilder.build();
+    }
+
+    @Bean
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}

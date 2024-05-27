@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+D:\2024-projetoCRM_ERP\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1867370530.index
+1784015775.index
+2299183566.index
+3772453422.index
+4098742334.index
+3091474474.index

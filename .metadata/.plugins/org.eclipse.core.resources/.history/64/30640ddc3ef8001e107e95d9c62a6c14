@@ -1,0 +1,39 @@
+var app = angular.module('myLogin', []);
+
+app.controller('LoginController', function($scope, $http, $window) {
+    $scope.login = {};
+
+    $scope.acessoLogin = function() {
+        $http.post('/process', $scope.login)
+            .then(function(response) {
+                if (response.data) {
+                    alert('Usuário válido');
+					alert('status ' + response.status);
+                    // Extraia o token da resposta
+                    var token = response.data.token; // Assumindo que o token está no corpo da resposta
+					
+                    // Armazene o token no localStorage
+                    localStorage.setItem('authToken', token);
+					alert(token);
+                    // Redirecione para a página protegida
+                    $window.location.href = '/private';
+                } else {
+                    // Tratar erro de autenticação ou outros erros
+                    alert('Data ERRO: ' + response.data);
+                    alert('Erro no login: ' + response.status);
+                    console.error('Erro no login:', response.status);
+                }
+            })
+            .catch(function(error) {
+                if (error.status === 302) {
+                    // Redirecionar para a nova rota
+                    alert('Erro 302');
+                    $window.location.href = error.headers('Location');
+                } else {
+                    alert('Usuário inválido ou senha incorreta');
+                }
+            });
+    };
+});
+
+

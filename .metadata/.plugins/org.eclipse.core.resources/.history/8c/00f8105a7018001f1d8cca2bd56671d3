@@ -1,0 +1,55 @@
+package com.evision.useraccess.service;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.evision.useraccess.model.Usuario;
+import com.evision.useraccess.repository.UsuarioRepository;
+import com.evision.useraccess.security.UserAuthenticated;
+
+@Service
+public class UserDetailsServiceImpl implements UserDetailsService{
+
+	
+	private final UsuarioRepository usuarioRepository;
+	
+	
+	public UserDetailsServiceImpl(UsuarioRepository usuarioRepository) {
+		this.usuarioRepository = usuarioRepository;
+	}
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.print("UserDetails Procurando Usuario --->>  "+ username +" ");
+		return usuarioRepository.findByEmail(username)
+	        .map(usuario -> new UserAuthenticated(usuario))
+	        .orElseThrow(
+	            () -> new UsernameNotFoundException("User Not Found with username: " + username));
+	 }
+	//@Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        System.out.print("UserDetails Procurando Usuario --->>  " + username + " ");
+//        Usuario usuario = usuarioRepository.findByEmail(username)
+//        		.map(usuario -> new UserAuthenticated(usuario))
+//                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+//
+//        // Carregue as permissões do usuário do banco de dados ou do token JWT
+//        List<String> permissoes = getPermissoesDoUsuario(usuario.getId()); // Função para obter as permissões
+//
+//        return new UserAuthenticated(usuario, permissoes);
+//    }
+
+    private List<String> getPermissoesDoUsuario(Long idUsuario) {
+        // Implemente a lógica para buscar as permissões do usuário no banco de dados
+        // ou no token JWT, de acordo com sua escolha
+
+        // Retorne a lista de permissões (strings)
+        return Arrays.asList("ROLE_USER"); // Exemplo
+    }
+
+}

@@ -1,0 +1,54 @@
+<!-- Adicione Bootstrap CSS e AngularJS -->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+
+<!-- Adicione ng-bootstrap CSS e JavaScript -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/3.0.6/ui-bootstrap-tpls.min.js"></script>-->
+<style>
+	/* Adicione um estilo personalizado para ajustar a largura dos inputs */
+	.custom-width-input {
+		width: 50%;
+		/* Largura desejada */
+		/* Para centralizar horizontalmente */
+	}
+</style>
+<!-- Seus scripts Angular 
+<script src="js/controllerFiltro.js"></script>-->
+<title>Detalhe Usuario</title>
+<div class="container text-left" ng-app="ListarApp" ng-controller="UsuarioController">
+
+	<!-- Formulário de Edição -->
+	<div class="modal fade" id="edicaoUsuarioModal" tabindex="-1" role="dialog"
+		aria-labelledby="edicaoUsuarioModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="edicaoUsuarioModalLabel">Editar Usuário</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="editNome">Nome:</label>
+							<input type="text" class="form-control" id="editNome" ng-model="usuarioEditavel.nome">
+						</div>
+						<div class="form-group">
+							<label for="editEmail">Email:</label>
+							<input type="text" class="form-control" id="editEmail" ng-model="usuarioEditavel.email">
+						</div>
+						<div class="form-group">
+							<label for="editSenha">Senha:</label>
+							<input type="password" class="form-control" id="editSenha" ng-model="usuarioEditavel.senha">
+						</div>
+						<!-- Adicione outros campos conforme necessário -->
+
+						<button type="button" class="btn btn-primary" ng-click="atualizarUsuario()">Atualizar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
